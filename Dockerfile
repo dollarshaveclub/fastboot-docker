@@ -36,7 +36,6 @@ ONBUILD RUN \
   bower install --allow-root && \
   npm install && \
   ember build --environment=production && \
-  git log -1 > dist/VERSION.txt && \
   #
   # Build server
   #

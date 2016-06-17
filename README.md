@@ -1,8 +1,10 @@
 # fastboot-docker
 Ember FastBoot App Server in a box.
 
-  * name: `fastboot`
+  * name: `dollarshaveclub/fastboot`
   * port: `3000`
+
+Available now at [pwfisher/fastboot](https://hub.docker.com/r/pwfisher/fastboot/). Coming soon at [dollarshaveclub/fastboot](https://hub.docker.com/r/dollarshaveclub/).
 
 ## Usage
 
@@ -10,9 +12,9 @@ Your repo should have
 
 ### Dockerfile
 ```
-FROM fastboot
+FROM dollarshaveclub/fastboot
 ```
-That's it. Nothing else is needed in your Dockerfile, thanks to the magic of ONBUILD.
+That's it. Nothing else is needed in your Dockerfile, thanks to the magic of `ONBUILD`.
 
 ### .dockerignore
 ```
