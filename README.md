@@ -4,8 +4,6 @@ Ember FastBoot App Server in a box.
   * name: `dollarshaveclub/fastboot`
   * port: `3000`
 
-Available now at [pwfisher/fastboot](https://hub.docker.com/r/pwfisher/fastboot/). Coming soon at [dollarshaveclub/fastboot](https://hub.docker.com/r/dollarshaveclub/).
-
 ## Usage
 
 Your repo should have
