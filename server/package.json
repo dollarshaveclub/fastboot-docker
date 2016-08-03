@@ -10,6 +10,6 @@
   "license": "MIT",
   "dependencies": {
     "fastboot-app-server": "1.0.0-beta.2",
-    "fastboot-watch-notifier": "1.0.0"
+    "fastboot-watch-notifier": "2.0.0"
   }
 }
