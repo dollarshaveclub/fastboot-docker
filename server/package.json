@@ -9,7 +9,7 @@
   "author": "Patrick Fisher <patrick@pwfisher.com>",
   "license": "MIT",
   "dependencies": {
-    "fastboot-app-server": "1.0.0-rc.4",
+    "fastboot-app-server": "pwfisher/fastboot-app-server.git#user-middleware",
     "fastboot-watch-notifier": "2.1.0"
   }
 }
