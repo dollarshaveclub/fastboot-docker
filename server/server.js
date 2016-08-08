@@ -26,10 +26,13 @@ const userMiddleware = function (req, res, next) {
   }
 };
 
+const workerCount = process.env.WORKER_COUNT;
+
 const server = new FastBootAppServer({
   distPath,
   notifier,
   userMiddleware,
+  workerCount,
 });
 
 server.start();

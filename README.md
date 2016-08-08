@@ -39,7 +39,9 @@ You can serve some routes fastbooted and some routes non-fastbooted by overridin
 
 # Runtime config
 
-`process.env.PORT` will control the port the fastboot app server listens on.
+`process.env.PORT` will control the port the fastboot app server listens on. Default: 3000.
+
+`process.env.WORKER_COUNT` will control the number of spawned HTTP listener threads. Default: 1 per CPU.
 
 Set `?fastboot=on` or `?fastboot=off` to override `isFastBootRoute` and turn fastboot on or off for that request.
 
