@@ -13,8 +13,7 @@ const notifier = new FastBootWatchNotifier({
   },
 });
 
-const userMiddleware = function (req, res, next) {
-
+const customMiddleware = function (req, res, next) {
   let doFastBoot = isFastBootRoute(req.path);
   if (req.query.fastboot === 'on') doFastBoot = true;
   if (req.query.fastboot === 'off') doFastBoot = false;
@@ -26,12 +25,27 @@ const userMiddleware = function (req, res, next) {
   }
 };
 
+// TODO: Can we make this build-time configurable?
+const SENTRY_DSN = 'https://0358e99300314974ab6d25793f0fe8dc:5eb5b192efc8445aa09809338e1b3f47@app.getsentry.com/92363';
+
+const userMiddlewareBefore = [
+  require("connect-datadog")({}),
+  require('raven').middleware.express.requestHandler(SENTRY_DSN)
+  require('raven').middleware.express.errorHandler(SENTRY_DSN),
+  [ '/*', customMiddleware ]
+];
+
+const userMiddlewareAfter = [
+  /* None. */
+];
+
 const workerCount = process.env.WORKER_COUNT;
 
 const server = new FastBootAppServer({
   distPath,
   notifier,
-  userMiddleware,
+  userMiddlewareBefore,
+  userMiddlewareAfter,
   workerCount,
 });
 
