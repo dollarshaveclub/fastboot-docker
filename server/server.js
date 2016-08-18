@@ -12,13 +12,15 @@ const notifier = new FastBootWatchNotifier({
   },
 });
 
-const initialMiddleware = require('./middleware');
+const preFastbootMiddlewares = require('./middleware/pre-fastboot');
+const postFastbootMiddlewares = require('./middleware/post-fastboot');
 const workerCount = process.env.WORKER_COUNT;
 
 const server = new FastBootAppServer({
   distPath,
   notifier,
-  initialMiddleware,
+  preFastbootMiddlewares,
+  postFastbootMiddlewares,
   workerCount,
 });
 

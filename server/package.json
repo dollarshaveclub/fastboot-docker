@@ -9,9 +9,7 @@
   "author": "Patrick Fisher <patrick@pwfisher.com>",
   "license": "MIT",
   "dependencies": {
-    "connect-datadog": "0.0.6",
-    "fastboot-app-server": "dollarshaveclub/fastboot-app-server.git#initial-middleware",
-    "fastboot-watch-notifier": "2.1.0",
-    "raven": "^0.12.1"
+    "fastboot-app-server": "dollarshaveclub/fastboot-app-server.git#middleware-hooks",
+    "fastboot-watch-notifier": "2.1.0"
   }
 }

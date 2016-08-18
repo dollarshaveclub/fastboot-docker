@@ -37,6 +37,12 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCuoz1Pq+iJKDzTP60xfgpLMEZYRCs65bnIFSd8U+Pi
 
 You can serve some routes fastbooted and some routes non-fastbooted by overriding the default `isFastBootRoute` function (which just returns true) in `server/is-fastboot-route.js`.
 
+### server/middleware/*
+
+To integrate middleware downstream (e.g. logging), override `server/middleware/pre-fastboot.js` or `server/middleware/post-fastboot.js`.
+
+If your middlewares have their own npm dependencies, override `server/middleware/package.json`.
+
 # Runtime config
 
 `process.env.PORT` will control the port the fastboot app server listens on. Default: 3000.
