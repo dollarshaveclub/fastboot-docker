@@ -1,0 +1,8 @@
+{
+  "name": "fastboot-docker-server-middleware",
+  "version": "1.0.0",
+  "description": "Hook for downstream middleware with npm dependencies.",
+  "author": "Patrick Fisher <patrick@pwfisher.com>",
+  "dependencies": {
+  }
+}
