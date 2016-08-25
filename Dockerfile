@@ -31,6 +31,13 @@ ONBUILD RUN \
   apk --no-cache add $APK_PKGS && \
   curl -L https://npmjs.org/install.sh | sh && \
   npm install -g $NPM_GLOBAL_PKGS && \
+
+  #
+  # Build server
+  #
+  cd /app/server && npm install --production && \
+  cd /app/server/middleware && npm install --production && \
+
   #
   # Build app
   #
@@ -38,12 +45,8 @@ ONBUILD RUN \
   bower install --allow-root && \
   npm install && \
   ember build --environment=production && \
-  #
-  # Build server
-  #
   cd /app/dist && npm install --production && \
-  cd /app/server && npm install --prodcution && \
-  cd /app/server/middleware && npm install --production && \
+
   #
   # Trim server node_modules
   #
