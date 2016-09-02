@@ -1,13 +1,59 @@
 {
-  "name": "ember-fastboot-server",
+  "name": "fastboot-docker",
   "version": "1.0.0",
-  "description": "Ember FastBoot server",
+  "description": "Dollar Shave Club's base docker container for Ember FastBoot Apps",
+  "main": "server/server.js",
   "private": true,
   "engines": {
-    "node": ">= 4"
+    "node": ">= 5"
   },
-  "author": "Patrick Fisher <patrick@pwfisher.com>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dollarshaveclub/fastboot-docker.git"
+  },
+  "keywords": [
+    "docker",
+    "fastboot",
+    "ember"
+  ],
+  "author": "Dollar Shave Club Engineering",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dollarshaveclub/fastboot-docker/issues"
+  },
+  "homepage": "https://github.com/dollarshaveclub/fastboot-docker#readme",
+  "contributors": [
+    {
+      "name": "Patrick Fisher",
+      "email": "patrick@pwfisher.com",
+      "url": "https://github.com/pwfisher",
+      "contributions": 12,
+      "additions": 353,
+      "deletions": 49,
+      "hireable": null
+    },
+    {
+      "name": "Brian Gonzalez",
+      "email": "me@briangonzalez.org",
+      "url": "https://github.com/briangonzalez",
+      "contributions": 1,
+      "additions": 31,
+      "deletions": 17,
+      "hireable": null
+    },
+    {
+      "name": "Arjan Singh",
+      "email": "arjan.singh@dollarshaveclub.com",
+      "url": "https://github.com/arjansingh",
+      "contributions": 2,
+      "additions": 14,
+      "deletions": 7,
+      "hireable": null
+    }
+  ],
   "dependencies": {
     "fastboot-app-server": "dollarshaveclub/fastboot-app-server.git#middleware-hooks",
     "fastboot-watch-notifier": "2.1.0"
