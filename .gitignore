@@ -1,0 +1,9 @@
+# Server dependencies
+server/node_modules
+
+# Test code dependencies
+test/node_modules
+
+# Fixture dependencies
+test/fixtures/fastboot-app/bower_components
+test/fixtures/fastboot-app/node_modules
