@@ -1,4 +1,6 @@
-# fastboot-docker
+[![Build Status](https://travis-ci.org/dollarshaveclub/fastboot-docker.svg?branch=master)](https://travis-ci.org/dollarshaveclub/fastboot-docker)
+
+# Docker Container `dollarshaveclub/fastboot`
 Ember FastBoot App Server in a box.
 
   * name: `dollarshaveclub/fastboot`
