@@ -41,9 +41,9 @@ ONBUILD RUN \
   #
   # Build server
   #
-  cd /app/dist && npm install && \
-  cd /app/server && npm install && \
-  cd /app/server/middleware && npm install && \
+  cd /app/dist && npm install --production && \
+  cd /app/server && npm install --prodcution && \
+  cd /app/server/middleware && npm install --production && \
   #
   # Trim server node_modules
   #
