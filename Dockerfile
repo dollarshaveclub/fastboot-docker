@@ -1,12 +1,11 @@
-FROM mhart/alpine-node:5.11
+FROM mhart/alpine-node:5.12
 
 COPY . /app
 
 ENV \
   # git, openssh needed for `npm install`
   # python, build-base (make, g++, cc) needed for libsass compile
-  # tar needed for curl|sh install of npm (ENOENT workaround)
-  APK_PKGS='git openssh python build-base tar' \
+  APK_PKGS='git openssh python build-base' \
   # node-gyp needed for libsass compile
   NPM_GLOBAL_PKGS='bower ember-cli node-gyp'
 
@@ -29,8 +28,14 @@ ONBUILD RUN \
   # Install global dependencies
   #
   apk --no-cache add $APK_PKGS && \
-  curl -L https://npmjs.org/install.sh | sh && \
   npm install -g $NPM_GLOBAL_PKGS && \
+
+  #
+  # Build server
+  #
+  cd /app/server && npm install --production && \
+  cd /app/server/middleware && npm install --production && \
+
   #
   # Build app
   #
@@ -38,12 +43,8 @@ ONBUILD RUN \
   bower install --allow-root && \
   npm install && \
   ember build --environment=production && \
-  #
-  # Build server
-  #
   cd /app/dist && npm install --production && \
-  cd /app/server && npm install --prodcution && \
-  cd /app/server/middleware && npm install --production && \
+
   #
   # Trim server node_modules
   #
