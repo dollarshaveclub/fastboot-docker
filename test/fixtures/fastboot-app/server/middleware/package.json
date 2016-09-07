@@ -1,0 +1,16 @@
+{
+  "name": "fastboot-app-test-middlewares",
+  "version": "1.0.0",
+  "description": "middlewares for fastboot-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "connect-datadog": "0.0.6",
+    "raven": "^0.12.1",
+    "winston": "^2.2.0"
+  }
+}

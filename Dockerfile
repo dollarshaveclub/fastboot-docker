@@ -31,6 +31,14 @@ ONBUILD RUN \
   npm install -g $NPM_GLOBAL_PKGS && \
 
   #
+  # Fix multiple `npm install` cross-linking issues
+  # See: https://github.com/npm/npm/issues/9863
+  #
+  cd $(npm root -g)/npm && \
+  npm install fs-extra && \
+  sed -i -e s/graceful-fs/fs-extra/ -e s/fs\.rename/fs.move/ ./lib/utils/rename.js && \
+
+  #
   # Build server
   #
   cd /app/server && npm install --production && \
