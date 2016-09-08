@@ -8,7 +8,7 @@ const distPath = '/app/dist';
 const notifier = new FastBootWatchNotifier({
   distPath,
   saneOptions: {
-    poll: true,
+    poll: process.env.POLLING || false,
   },
 });
 
