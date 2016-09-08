@@ -47,7 +47,9 @@ If your middlewares have their own npm dependencies, override `server/middleware
 
 # Runtime config
 
-`process.env.PORT` will control the port the fastboot app server listens on. Default: 3000.
+`process.env.POLLING` will control whether the fastboot app server polls the `/app/dist` directory for files to serve. Default: `false`.
+
+`process.env.PORT` will control the port the fastboot app server listens on. Default: `3000`.
 
 `process.env.WORKER_COUNT` will control the number of spawned HTTP listener threads. Default: 1 per CPU.
 
