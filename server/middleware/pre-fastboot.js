@@ -4,7 +4,7 @@ const isFastbootRoute = require('./is-fastboot-route');
 const distPath = 'app/dist';
 
 const customMiddleware = function (req, res, next) {
-  let doFastBoot = isFastbootRoute(req.path);
+  let doFastBoot = isFastbootRoute(req.baseUrl);
   if (req.query.fastboot === 'on') doFastBoot = true;
   if (req.query.fastboot === 'off') doFastBoot = false;
 
