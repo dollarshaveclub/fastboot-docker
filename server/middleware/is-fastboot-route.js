@@ -1,5 +1,5 @@
 "use strict";
 
-const isFastbootRoute = (path) => true;
+const isFastbootRoute = (baseUrl) => true;
 
 module.exports = isFastbootRoute;

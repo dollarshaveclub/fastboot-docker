@@ -29,4 +29,13 @@ describe("dollarshaveclub/fastboot", function() {
       expect(response.body).to.contain('<!-- EMBER_CLI_FASTBOOT_BODY -->');
     });
   });
+
+  it("serves assets", function () {
+    return request('http://127.0.0.1:3000/assets/fastboot-app.js')
+    .then(response => {
+      expect(response.statusCode).to.equal(200);
+      expect(response.body).to.contain('"use strict";');
+    });
+  });
+
 });
