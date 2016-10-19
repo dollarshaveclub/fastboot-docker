@@ -104,6 +104,11 @@ ONBUILD RUN \
   rm -rf \
     ~/.ssh \
   && \
+  #
+  # TEMPORARY HACK to work around fastboot build issues
+  # - `ember build --watch` does not support dist/node-modules
+  #
+  mv /app/dist/node_modules /app/node_modules && \
   echo 'Done'
 
 EXPOSE 3000
