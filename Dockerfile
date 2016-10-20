@@ -93,19 +93,22 @@ ONBUILD RUN \
     /tmp/* \
   && \
   #
-  # Cleanup apk
+  # Remove bulky SSL certs (880K)
   #
   rm -rf \
-    /etc/apk/* \
     /etc/ssl \
-    /lib/apk/* \
   && \
   #
-  # Cleanup Github SSH config
+  # Remove sensitive Github SSH credentials
   #
   rm -rf \
     ~/.ssh \
   && \
+  #
+  # TEMPORARY HACK to work around fastboot build issues
+  # - `ember build --watch` does not support dist/node-modules
+  #
+  mv /app/dist/node_modules /app/node_modules && \
   echo 'Done'
 
 EXPOSE 3000
