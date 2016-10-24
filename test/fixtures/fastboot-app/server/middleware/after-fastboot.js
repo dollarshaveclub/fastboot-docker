@@ -8,7 +8,7 @@ const datadog = require('connect-datadog')({
 
 const NODE_ENV = process.env.NODE_ENV || 'production';
 
-module.exports = [
-  [ datadog ]
-];
+module.exports = function (app) {
+  app.use(datadog);
+};
 

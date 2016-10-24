@@ -3,7 +3,7 @@
 const isFastbootRoute = require('./is-fastboot-route');
 const distPath = 'app/dist';
 
-const customMiddleware = function (req, res, next) {
+function customMiddleware (req, res, next) {
   let doFastBoot = isFastbootRoute(req.baseUrl);
   if (req.query.fastboot === 'on') doFastBoot = true;
   if (req.query.fastboot === 'off') doFastBoot = false;
@@ -15,6 +15,6 @@ const customMiddleware = function (req, res, next) {
   }
 };
 
-module.exports = [
-  [ '/*', customMiddleware ]
-];
+module.exports = function (app) {
+  app.use('/*', customMiddleware);
+};

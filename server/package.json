@@ -55,7 +55,7 @@
     }
   ],
   "dependencies": {
-    "fastboot-app-server": "dollarshaveclub/fastboot-app-server.git#legacy-middleware-hooks",
+    "fastboot-app-server": "1.0.0-rc.5",
     "fastboot-watch-notifier": "3.0.0"
   }
 }
