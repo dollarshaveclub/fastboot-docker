@@ -41,9 +41,21 @@ You can serve some routes fastbooted and some routes non-fastbooted by overridin
 
 ### server/middleware/*
 
-To integrate middleware downstream (e.g. logging), override `server/middleware/pre-fastboot.js` or `server/middleware/post-fastboot.js`.
+If you server needs middleware to run before or after the FastBoot middleware, respectively override `server/middleware/before-fastboot.js` and `server/middleware/after-fastboot.js`.
 
 If your middlewares have their own npm dependencies, override `server/middleware/package.json`.
+
+#### Deprecated: `pre-fastboot` and `post-fastboot` hooks
+
+Previously, custom middlewares were defined in `server/middleware/pre-fastboot.js` and `server/middleware/post-fastboot.js`.
+They were exported as double-arrays consisting of argument lists.
+See [a6736d2](https://github.com/dollarshaveclub/fastboot-docker/blob/a6736d2c0d60eed52d088c7d9ad1a912fc81a3c2/server/middleware/pre-fastboot.js).
+
+If you have built a server that requires these hooks and do not want to migrate to the new `beforeMiddleware`/`afterMiddleware` hooks, please the following `Dockerfile`:
+
+```
+FROM dollarshaveclub/fastboot:legacy-middleware-hooks
+```
 
 # Runtime config
 
