@@ -39,6 +39,11 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCuoz1Pq+iJKDzTP60xfgpLMEZYRCs65bnIFSd8U+Pi
 
 You can serve some routes fastbooted and some routes non-fastbooted by overriding the default `isFastBootRoute` function (which just returns true) in `server/is-fastboot-route.js`.
 
+### server/config/static-assets.js
+
+You can configure how static assets are served by overriding this file.
+See the [express static documentation](https://expressjs.com/en/4x/api.html#express) for the configurable options.
+
 ### server/middleware/*
 
 If you server needs middleware to run before or after the FastBoot middleware, respectively override `server/middleware/before-fastboot.js` and `server/middleware/after-fastboot.js`.

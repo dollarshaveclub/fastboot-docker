@@ -55,7 +55,7 @@
     }
   ],
   "dependencies": {
-    "fastboot-app-server": "1.0.0-rc.5",
+    "fastboot-app-server": "dollarshaveclub/fastboot-app-server#bb181e8",
     "fastboot-watch-notifier": "3.0.0"
   }
 }

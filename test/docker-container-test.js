@@ -30,7 +30,7 @@ describe("dollarshaveclub/fastboot", function() {
     });
   });
 
-  it("serves assets", function () {
+  it("serves static assets", function () {
     return request('http://127.0.0.1:3000/assets/fastboot-app.js')
     .then(response => {
       expect(response.statusCode).to.equal(200);
@@ -38,4 +38,11 @@ describe("dollarshaveclub/fastboot", function() {
     });
   });
 
+  it("sets cache control headers on static assets", function () {
+    return request('http://127.0.0.1:3000/assets/fastboot-app.js')
+      .then(response => {
+        expect(response.headers['cache-control']).to.equal('public, max-age=31536000');
+        expect(response.statusCode).to.equal(200);
+      });
+  });
 });
