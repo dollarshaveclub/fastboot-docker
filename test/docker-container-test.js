@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require('chai').expect;
-const request = require('request-promise').defaults({ simple: false, resolveWithFullResponse: true });
+const request = require('request-promise').defaults({ simple: false, resolveWithFullResponse: true, gzip: true });
 
 describe("dollarshaveclub/fastboot", function() {
   this.timeout(3000);
@@ -42,6 +42,14 @@ describe("dollarshaveclub/fastboot", function() {
     return request('http://127.0.0.1:3000/assets/fastboot-app.js')
       .then(response => {
         expect(response.headers['cache-control']).to.equal('public, max-age=31536000');
+        expect(response.statusCode).to.equal(200);
+      });
+  });
+
+  it("gzips responses", function () {
+    return request('http://127.0.0.1:3000/assets/fastboot-app.js')
+      .then(response => {
+        expect(response.headers['content-encoding']).to.equal('gzip');
         expect(response.statusCode).to.equal(200);
       });
   });
