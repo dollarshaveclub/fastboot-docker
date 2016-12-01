@@ -21,7 +21,6 @@ const server = new FastBootAppServer({
   distPath,
   notifier,
   staticAssetOptions,
-  gzip: true,
   beforeMiddleware,
   afterMiddleware,
   workerCount,
