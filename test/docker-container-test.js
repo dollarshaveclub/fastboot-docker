@@ -47,7 +47,7 @@ describe("dollarshaveclub/fastboot", function() {
   });
 
   it("gzips responses", function () {
-    return request('http://127.0.0.1:3000/assets/fastboot-app.js')
+    return request('http://127.0.0.1:3000/test-route')
       .then(response => {
         expect(response.headers['content-encoding']).to.equal('gzip');
         expect(response.statusCode).to.equal(200);
