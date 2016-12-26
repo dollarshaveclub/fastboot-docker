@@ -16,5 +16,6 @@ function customMiddleware (req, res, next) {
 };
 
 module.exports = function (app) {
+  app.use(require('compression')());
   app.use('/*', customMiddleware);
 };
