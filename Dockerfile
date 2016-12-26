@@ -3,14 +3,31 @@ FROM mhart/alpine-node:6.9.2
 COPY . /app
 
 ENV \
-  # git, openssh needed for `npm install`
-  # python, build-base (make, g++, cc) needed for libsass compile
-  APK_PKGS='git openssh python build-base' \
-  # node-gyp needed for libsass compile
-  NPM_GLOBAL_PKGS='bower ember-cli node-gyp'
+  # Please use ember-cli-sass >= 6.0.0 in your project which
+  # ships with node-sass v4.0.1 with support for alpine bindings
+  APK_PKGS='git wget openssh' \
+  NODE_PKGS='bower node-gyp node-sass'
+
+RUN \
+
+  #
+  # Install Alpine packages
+  #
+  apk --no-cache add $APK_PKGS && \
+
+  #
+  # Install yarn & bower
+  #
+  mkdir /opt && cd /opt && \
+  wget https://yarnpkg.com/latest.tar.gz && \
+  tar zvxf latest.tar.gz && \
+  export PATH="/opt/dist/bin:$PATH" && \
+  yarn global add $NODE_PKGS
 
 # Having this before the build means it will rebuild everything, every time.
 # Needed because we get dist/package.json from `ember build`
+# NOTE: Moved below other ONBUILDs as to not invalidate them by simply
+# changing app code.
 ONBUILD COPY . /app
 
 ONBUILD RUN \
@@ -23,35 +40,29 @@ ONBUILD RUN \
   chmod 0600 ~/.ssh/id_rsa && \
   cat /app/github-ssh/known_hosts >> ~/.ssh/known_hosts && \
   cat /app/github-ssh/ssh_config >> ~/.ssh/ssh_config && \
-  chmod 0644 ~/.ssh/known_hosts && \
-  #
-  # Install global dependencies
-  #
-  apk --no-cache add $APK_PKGS && \
-  npm install -g $NPM_GLOBAL_PKGS && \
+  chmod 0644 ~/.ssh/known_hosts
 
+ONBUILD RUN \
   #
-  # Fix multiple `npm install` cross-linking issues
-  # See: https://github.com/npm/npm/issues/9863
+  # Setup path for yarn/bower.
   #
-  cd $(npm root -g)/npm && \
-  npm install fs-extra && \
-  sed -i -e s/graceful-fs/fs-extra/ -e s/fs\.rename/fs.move/ ./lib/utils/rename.js && \
+  export PATH="/opt/dist/bin:$PATH" && \
+  export PATH="$PATH:`yarn global bin`" && \
 
   #
   # Build server
   #
-  cd /app/server && npm install --production && \
-  cd /app/server/middleware && npm install --production && \
+  cd /app/server && yarn install --production && \
+  cd /app/server/middleware && yarn install --production && \
 
   #
   # Build app
   #
   cd /app && \
+  yarn install --ignore-optional && \
   bower install --allow-root && \
-  npm install && \
-  ember build --environment=production && \
-  cd /app/dist && npm install --production && \
+  ./node_modules/.bin/ember build --environment=production && \
+  cd /app/dist && yarn install --production && \
 
   #
   # Trim server node_modules
@@ -64,11 +75,12 @@ ONBUILD RUN \
       -o \( -type f -name *.md -o -iname LICENSE -o -name *.map \) \
     \) -exec rm -rf '{}' + \
   && \
+
   #
   # Uninstall global dependencies
   #
   apk del $APK_PKGS && \
-  npm uninstall -g $NPM_GLOBAL_PKGS && \
+
   #
   # Cleanup app
   #
@@ -77,6 +89,7 @@ ONBUILD RUN \
     /app/node_modules \
     /app/tmp \
   && \
+
   #
   # Cleanup bower
   #
@@ -84,26 +97,31 @@ ONBUILD RUN \
     ~/.cache/bower \
     ~/.config/configstore \
   && \
+
   #
-  # Cleanup npm
+  # Cleanup npm/yarn
   #
   rm -rf \
     ~/.node-gyp \
     ~/.npm \
+    ~/.yarn \
     /tmp/* \
   && \
+
   #
   # Remove bulky SSL certs (880K)
   #
   rm -rf \
     /etc/ssl \
   && \
+
   #
   # Remove sensitive Github SSH credentials
   #
   rm -rf \
     ~/.ssh \
   && \
+
   #
   # TEMPORARY HACK to work around fastboot build issues
   # - `ember build --watch` does not support dist/node-modules
