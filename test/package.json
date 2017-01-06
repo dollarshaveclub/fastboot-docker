@@ -1,6 +1,6 @@
 {
   "name": "fastboot-docker-tests",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "description": "test depdencencies for our docker container",
   "main": "docker-container-test.js",
   "scripts": {

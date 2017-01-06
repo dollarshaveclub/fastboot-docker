@@ -35,48 +35,33 @@ If you need to `npm install` packages from github, override the default by addin
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCuoz1Pq+iJKDzTP60xfgpLMEZYRCs65bnIFSd8U+Pi2PTrf2KRUZrtmvgSHR2y21Evv9RKkwTFF5rVXRs1g+lf6cuhzifbKJsR9dSujX57gmP2zrVZEBA9DEIeQaS8NcurmyqbDIFO7LDh51aAzyYzNOfQn782oQml8n0VZzTI17NmVA64PYvGrYok51Tk56VQmRQ8//ck3TSf+nOUS0MEXGN1jhFBiMVG77P3UVYbz9HKNH/cATvY8klcpzoQJFl39TK2Hn/NFU+P99uJ5AjzNRNBWBOCEGHXAtC4j1ukBMq4Rq4lphUMFC7JVATk9cdyOkErrsJcGHtoMQsS7r2oaxNUEA8gJAOs0FYzEX/X2dqP8ONKNfNjuTvV8RVtLC9MSzWAiZHMbmACSsfJl+5JtGMHP6DU5mH+diT1IamRWnzhFKjYxIBwqO9fRFcew/njmy63t+3g0RpBKn3x5BByI92MNHYwx/IDuEuBtg3pG+gYVufKyhpBxXPu2n22Tp19V5MVHGZUqTFogu+G19CH/yhp6XhsO/CGJ8eHUwTlE0YhVOTSyBZXLW+EBn6+RmjUTCsPoqbP80W6p2UPYxm1D88tmfXKmtg2XGGsXFsA7oWY2fIAfjnzWO4xm1NU/TKsZQ9sgSBJ08KoOU4IgvqMKdn87/04dAbm7/TfIJoXlw== nobody@example.com
 ```
 
-### server/is-fastboot-route.js
+### server-fastboot-docker/is-fastboot-route.js
 
-You can serve some routes fastbooted and some routes non-fastbooted by overriding the default `isFastBootRoute` function (which just returns true) in `server/is-fastboot-route.js`.
+You can serve some routes fastbooted and some routes non-fastbooted by overriding the default `isFastBootRoute` function (which just returns true) in `server-fastboot-docker/is-fastboot-route.js`.
 
-### server/config/static-assets.js
+### server-fastboot-docker/config/static-assets.js
 
 You can configure how static assets are served by overriding this file.
 See the [express static documentation](https://expressjs.com/en/4x/api.html#express) for the configurable options.
 
-### server/middleware/*
+### server-fastboot-docker/middleware/*
 
-If you server needs middleware to run before or after the FastBoot middleware, respectively override `server/middleware/before-fastboot.js` and `server/middleware/after-fastboot.js`.
+If you server needs middleware to run before or after the FastBoot middleware, respectively override `server-fastboot-docker/middleware/before-fastboot.js` and `server-fastboot-docker/middleware/after-fastboot.js`.
 
-If your middlewares have their own npm dependencies, override `server/middleware/package.json`.
-
-#### Deprecated: `pre-fastboot` and `post-fastboot` hooks
-
-Previously, custom middlewares were defined in `server/middleware/pre-fastboot.js` and `server/middleware/post-fastboot.js`.
-They were exported as double-arrays consisting of argument lists.
-See [a6736d2](https://github.com/dollarshaveclub/fastboot-docker/blob/a6736d2c0d60eed52d088c7d9ad1a912fc81a3c2/server/middleware/pre-fastboot.js).
-
-If you have built a server that requires these hooks and do not want to migrate to the new `beforeMiddleware`/`afterMiddleware` hooks, please the following `Dockerfile`:
+If your middlewares have their own npm dependencies, override `server-fastboot-docker/middleware/package.json`.
 
 ```
 FROM dollarshaveclub/fastboot:legacy-middleware-hooks
 ```
 
-# Runtime config
+## Runtime config
 
-`process.env.POLLING` will control whether the fastboot app server polls the `/app/dist` directory for files to serve. Default: `false`.
-
-`process.env.PORT` will control the port the fastboot app server listens on. Default: `3000`.
-
-`process.env.WORKER_COUNT` will control the number of spawned HTTP listener threads. Default: 1 per CPU.
+- `process.env.POLLING` will control whether the fastboot app server polls the `/app/dist` directory for files to serve. Default: `false`.
+- `process.env.PORT` will control the port the fastboot app server listens on. Default: `3000`.
+- `process.env.WORKER_COUNT` will control the number of spawned HTTP listener threads. Default: 1 per CPU.
 
 Set `?fastboot=on` or `?fastboot=off` to override `isFastBootRoute` and turn fastboot on or off for that request.
 
-# Notes
+## Notes
 
-For ultimate lightness (save another 11.7M out of 39.4M non-app overhead), we could
-- use alpine directly,
-- compile node with npm for build, then
-- recompile node without npm for runtime
-
-But this would increase build time significantly and make this Dockerfile vastly more complicated.
+node-sass v4.1.0 has [built-in support](https://github.com/sass/node-sass/issues/1589#issuecomment-267899551) for Alpine. In order to take advantage of these pre-built binaries, ensure that [ember-cli-sass](https://github.com/aexmachina/ember-cli-sass) is at `v6.0.0` or higher in your project.

@@ -52,8 +52,8 @@ ONBUILD RUN \
   #
   # Build server
   #
-  cd /app/server && yarn install --production && \
-  cd /app/server/middleware && yarn install --production && \
+  cd /app/server-fastboot-docker && yarn install --production && \
+  cd /app/server-fastboot-docker/middleware && yarn install --production && \
 
   #
   # Build app
@@ -69,7 +69,7 @@ ONBUILD RUN \
   #
   find \
     /app/dist/node_modules \
-    /app/server/node_modules \
+    /app/server-fastboot-docker/node_modules \
     \( \
       \( -type d -name test -o -name .bin \) \
       -o \( -type f -name *.md -o -iname LICENSE -o -name *.map \) \
@@ -131,4 +131,4 @@ ONBUILD RUN \
 
 EXPOSE 3000
 
-CMD ["node", "/app/server/server.js"]
+CMD ["node", "/app/server-fastboot-docker/server.js"]
