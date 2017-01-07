@@ -8,8 +8,8 @@ services:
   - docker
 
 install:
-  - cd server/ && npm install && cd ..
-  - cd test/ && npm install && cd ..
+  - cd server-fastboot-docker/ && yarn && cd ..
+  - cd test/ && yarn && cd ..
 
 script:
   - docker build -t dollarshaveclub/fastboot .
