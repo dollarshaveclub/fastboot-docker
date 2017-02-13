@@ -52,17 +52,17 @@ ONBUILD RUN \
   #
   # Build server
   #
-  cd /app/server-fastboot-docker && yarn install --production && \
-  cd /app/server-fastboot-docker/middleware && yarn install --production && \
+  cd /app/server-fastboot-docker && npm install --production && \
+  cd /app/server-fastboot-docker/middleware && npm install --production && \
 
   #
   # Build app
   #
   cd /app && \
-  yarn install --ignore-optional && \
+  npm install --ignore-optional && \
   bower install --allow-root && \
   ./node_modules/.bin/ember build --environment=production && \
-  cd /app/dist && yarn install --production && \
+  cd /app/dist && npm install --production && \
 
   #
   # Trim server node_modules
