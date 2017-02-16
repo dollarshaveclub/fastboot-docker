@@ -55,6 +55,7 @@
     }
   ],
   "dependencies": {
+    "compression": "^1.6.2",
     "fastboot-app-server": "^1.0.0-rc.5",
     "fastboot-watch-notifier": "3.0.0"
   }
