@@ -2,7 +2,6 @@
 
 const FastBootAppServer = require('fastboot-app-server');
 const FastBootWatchNotifier = require('fastboot-watch-notifier');
-const staticAssetOptions = require('./config/static-assets.js');
 
 const distPath = '/app/dist';
 
@@ -20,7 +19,6 @@ const workerCount = process.env.WORKER_COUNT;
 const server = new FastBootAppServer({
   distPath,
   notifier,
-  staticAssetOptions,
   gzip: true,
   beforeMiddleware,
   afterMiddleware,
