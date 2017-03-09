@@ -3,7 +3,7 @@
 const FastBootAppServer = require('fastboot-app-server');
 const FastBootWatchNotifier = require('fastboot-watch-notifier');
 
-const distPath = '/app/dist';
+const distPath = require('./config/dist').DIST_PATH;
 
 const notifier = new FastBootWatchNotifier({
   distPath,
