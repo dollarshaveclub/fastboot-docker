@@ -18,11 +18,8 @@ RUN \
   echo 'Updating tar: http://bit.ly/2lvp7hp' && \
   apk --update add tar && \
 
-  #
-  # Install yarn & bower
-  #
-  echo "Installing yarn version: ${YARN_VERSION}" && \
-  curl -o- -L https://yarnpkg.com/install.sh | /bin/sh -s -- --version $YARN_VERSION && \
+  # Install our version of yarn
+  rm -rf /usr/local/bin/yarn && \
+  npm install -g yarn@$YARN_VERSION
 
-  export PATH="$HOME/.yarn/bin:$PATH" && \
-  yarn global add $NODE_PKGS
+RUN yarn --version
