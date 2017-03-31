@@ -16,10 +16,4 @@ RUN \
   #
   apk --no-cache add $APK_PKGS && \
   echo 'Updating tar: http://bit.ly/2lvp7hp' && \
-  apk --update add tar && \
-
-  # Install our version of yarn
-  rm -rf /usr/local/bin/yarn && \
-  npm install -g yarn@$YARN_VERSION
-
-RUN yarn --version
+  apk --update add tar
