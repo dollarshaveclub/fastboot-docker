@@ -22,9 +22,8 @@ RUN \
   # Install yarn & bower
   #
   echo "Installing yarn version: ${YARN_VERSION}" && \
-  curl -o- -L https://yarnpkg.com/install.sh | /bin/sh -s -- --version $YARN_VERSION && \
-
-  export PATH="$HOME/.yarn/bin:$PATH" && \
+  rm -rf /usr/local/bin/yarn && \
+  npm install -g yarn@$YARN_VERSION && \
   yarn global add $NODE_PKGS
 
 # Having this before the build means it will rebuild everything, every time.
