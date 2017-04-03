@@ -6,26 +6,7 @@ ENV \
   # Please use ember-cli-sass >= 6.0.0 in your project which
   # ships with node-sass v4.0.1 with support for alpine bindings
   APK_PKGS='git openssh curl' \
-  NODE_PKGS='bower node-gyp node-sass' \
-  YARN_VERSION='0.22.0'
-
-RUN \
-
-  #
-  # Install Alpine packages
-  #
-  apk --no-cache add $APK_PKGS && \
-  echo 'Updating tar: http://bit.ly/2lvp7hp' && \
-  apk --update add tar && \
-
-  #
-  # Install yarn & bower
-  #
-  echo "Installing yarn version: ${YARN_VERSION}" && \
-  curl -o- -L https://yarnpkg.com/install.sh | /bin/sh -s -- --version $YARN_VERSION && \
-
-  export PATH="$HOME/.yarn/bin:$PATH" && \
-  yarn global add $NODE_PKGS
+  NODE_PKGS='bower node-gyp node-sass'
 
 # Having this before the build means it will rebuild everything, every time.
 # Needed because we get dist/package.json from `ember build`
@@ -46,25 +27,23 @@ ONBUILD RUN \
   chmod 0644 ~/.ssh/known_hosts
 
 ONBUILD RUN \
-  #
-  # Setup path for yarn/bower.
-  #
-  export PATH="$HOME/.yarn/bin:$PATH" && \
+
+  npm install -g $NODE_PKGS && \
 
   #
   # Build server
   #
-  cd /app/server-fastboot-docker && yarn install --production && \
-  cd /app/server-fastboot-docker/middleware && yarn install --production && \
+  cd /app/server-fastboot-docker && npm install --production && \
+  cd /app/server-fastboot-docker/middleware && npm install --production && \
 
   #
   # Build app
   #
   cd /app && \
-  yarn install --ignore-optional && \
+  npm install --ignore-optional && \
   bower install --allow-root && \
   ./node_modules/.bin/ember build --environment=production && \
-  cd /app/dist && yarn install --production && \
+  cd /app/dist && npm install --production && \
 
   #
   # Trim server node_modules
@@ -101,12 +80,11 @@ ONBUILD RUN \
   && \
 
   #
-  # Cleanup npm/yarn
+  # Cleanup npm
   #
   rm -rf \
     ~/.node-gyp \
     ~/.npm \
-    ~/.yarn \
     /tmp/* \
   && \
 
