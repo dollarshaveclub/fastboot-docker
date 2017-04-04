@@ -31,7 +31,8 @@ ONBUILD RUN \
   #
   # Install Alpine packages
   #
-  apk-no-cache add $APK_PKGS && \
+
+  apk add --no-cache $APK_PKGS && \
   echo 'Updating tar: http://bit.ly/2lvp7hp' && \
   apk --update add tar && \
 
