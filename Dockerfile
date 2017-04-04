@@ -28,6 +28,13 @@ ONBUILD RUN \
 
 ONBUILD RUN \
 
+  #
+  # Install Alpine packages
+  #
+  apk-no-cache add $APK_PKGS && \
+  echo 'Updating tar: http://bit.ly/2lvp7hp' && \
+  apk --update add tar && \
+
   npm install -g $NODE_PKGS && \
 
   #
