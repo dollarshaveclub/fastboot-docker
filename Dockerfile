@@ -1,4 +1,6 @@
 FROM node:7-alpine
+ARG EMBER_ENVIRONMENT=production
+ARG YARN_ENVIRONMENT=production
 
 COPY . /app
 
@@ -63,8 +65,8 @@ ONBUILD RUN \
   cd /app && \
   yarn install --ignore-optional && \
   bower install --allow-root && \
-  ./node_modules/.bin/ember build --environment=production && \
-  cd /app/dist && yarn install --production && \
+  ./node_modules/.bin/ember build --environment=$EMBER_ENVIRONMENT && \
+  cd /app/dist && yarn install --$YARN_ENVIRONMENT && \
 
   #
   # Trim server node_modules
