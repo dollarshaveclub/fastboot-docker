@@ -6,8 +6,7 @@ ENV \
   # Please use ember-cli-sass >= 6.0.0 in your project which
   # ships with node-sass v4.0.1 with support for alpine bindings
   APK_PKGS='git openssh curl' \
-  NODE_PKGS='bower node-gyp node-sass' \
-  YARN_VERSION='0.22.0'
+  NODE_PKGS='bower node-gyp node-sass'
 
 RUN \
 
@@ -21,8 +20,6 @@ RUN \
   #
   # Install yarn & bower
   #
-  echo "Installing yarn version: ${YARN_VERSION}" && \
-  curl -o- -L https://yarnpkg.com/install.sh | /bin/sh -s -- --version $YARN_VERSION && \
 
   export PATH="$HOME/.yarn/bin:$PATH" && \
   yarn global add $NODE_PKGS
@@ -46,10 +43,6 @@ ONBUILD RUN \
   chmod 0644 ~/.ssh/known_hosts
 
 ONBUILD RUN \
-  #
-  # Setup path for yarn/bower.
-  #
-  export PATH="$HOME/.yarn/bin:$PATH" && \
 
   #
   # Build server
