@@ -1,5 +1,13 @@
 FROM node:7-alpine
 
+ONBUILD ENV EMBER_ENVIRONMENT=production
+
+ONBUILD ENV YARN_ENVIRONMENT=production
+
+ONBUILD RUN echo $EMBER_ENVIRONMENT
+
+ONBUILD RUN echo $YARN_ENVIRONMENT
+
 COPY . /app
 
 ENV \
@@ -63,8 +71,8 @@ ONBUILD RUN \
   cd /app && \
   yarn install --ignore-optional && \
   bower install --allow-root && \
-  ./node_modules/.bin/ember build --environment=production && \
-  cd /app/dist && yarn install --production && \
+  ./node_modules/.bin/ember build --environment=$EMBER_ENVIRONMENT && \
+  cd /app/dist && yarn install --$YARN_ENVIRONMENT && \
 
   #
   # Trim server node_modules
