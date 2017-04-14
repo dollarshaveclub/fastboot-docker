@@ -6,8 +6,7 @@ ENV \
   # Please use ember-cli-sass >= 6.0.0 in your project which
   # ships with node-sass v4.0.1 with support for alpine bindings
   APK_PKGS='git openssh curl' \
-  NODE_PKGS='bower node-gyp node-sass' \
-  YARN_VERSION='0.22.0'
+  NODE_PKGS='bower node-gyp node-sass'
 
 RUN \
 
@@ -19,10 +18,8 @@ RUN \
   apk --update add tar && \
 
   #
-  # Install yarn & bower
+  # Install bower
   #
-  echo "Installing yarn version: ${YARN_VERSION}" && \
-  curl -o- -L https://yarnpkg.com/install.sh | /bin/sh -s -- --version $YARN_VERSION && \
 
   export PATH="$HOME/.yarn/bin:$PATH" && \
   yarn global add $NODE_PKGS
@@ -54,17 +51,20 @@ ONBUILD RUN \
   #
   # Build server
   #
-  cd /app/server-fastboot-docker && yarn install --production && \
-  cd /app/server-fastboot-docker/middleware && yarn install --production && \
+  cd /app/server-fastboot-docker && \
+    (yarn install --production || npm install --production) && \
+  cd /app/server-fastboot-docker/middleware && \
+    (yarn install --production || npm install --production) && \
 
   #
   # Build app
   #
   cd /app && \
-  yarn install --ignore-optional && \
-  bower install --allow-root && \
-  ./node_modules/.bin/ember build --environment=production && \
-  cd /app/dist && yarn install --production && \
+    (yarn install --ignore-optional || npm install) && \
+    bower install --allow-root && \
+    ./node_modules/.bin/ember build --environment=production && \
+  cd /app/dist && \
+    (yarn install --production || npm install --production) && \
 
   #
   # Trim server node_modules
@@ -87,9 +87,11 @@ ONBUILD RUN \
   # Cleanup app
   #
   rm -rf \
+    /app/.git \
     /app/bower_components \
     /app/node_modules \
     /app/tmp \
+    /app/public \
   && \
 
   #
@@ -108,6 +110,7 @@ ONBUILD RUN \
     ~/.npm \
     ~/.yarn \
     /tmp/* \
+    /root/.cache \
   && \
 
   #
