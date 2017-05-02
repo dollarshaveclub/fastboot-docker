@@ -21,8 +21,7 @@ RUN \
   # Install bower
   #
 
-  export PATH="$HOME/.yarn/bin:$PATH" && \
-  yarn global add $NODE_PKGS
+  npm install -g $NODE_PKGS
 
 # Having this before the build means it will rebuild everything, every time.
 # Needed because we get dist/package.json from `ember build`
@@ -43,28 +42,24 @@ ONBUILD RUN \
   chmod 0644 ~/.ssh/known_hosts
 
 ONBUILD RUN \
-  #
-  # Setup path for yarn/bower.
-  #
-  export PATH="$HOME/.yarn/bin:$PATH" && \
 
   #
   # Build server
   #
   cd /app/server-fastboot-docker && \
-    (yarn install --production || npm install --production) && \
+    npm install --production && \
   cd /app/server-fastboot-docker/middleware && \
-    (yarn install --production || npm install --production) && \
+    npm install --production && \
 
   #
   # Build app
   #
   cd /app && \
-    (yarn install --ignore-optional || npm install) && \
+    npm install && \
     bower install --allow-root && \
     ./node_modules/.bin/ember build --environment=production && \
   cd /app/dist && \
-    (yarn install --production || npm install --production) && \
+    npm install --production && \
 
   #
   # Trim server node_modules
