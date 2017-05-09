@@ -1,9 +1,9 @@
 "use strict";
 
 const express = require('express');
-const distPath = 'app/dist';
 const isFastbootRoute = require('./is-fastboot-route');
 const staticAssetOptions = require('../config/static-assets.js');
+const distPath = require('../config/dist').DIST_PATH;
 
 function customMiddleware (req, res, next) {
   let doFastBoot = isFastbootRoute(req.baseUrl);
